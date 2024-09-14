@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Information</title>
+    <link rel="stylesheet" href="style.css"> <!-- Link to the CSS file -->
+</head>
+<body>
+    <div class="container">
+        <h2>Personal Information</h2>
+        <form id="personal-info-form" action="/apply2" method="POST">
+            <label for="full-name">Full Name:</label>
+            <input type="text" id="fullName" name="fullName" required>
+            <div id="full-name-error" class="error"></div>
+
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required>
+            <div id="dob-error" class="error"></div>
+
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="">Select</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+            <div id="gender-error" class="error"></div>
+
+            <label for="marital-status">Marital Status:</label>
+            <select id="maritalStatus" name="maritalStatus" required>
+                <option value="">Select</option>
+                <option value="single">Single</option>
+                <option value="married">Married</option>
+                <option value="other">Other</option>
+            </select>
+            <div id="marital-status-error" class="error"></div>
+
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" required>
+            <div id="email-error" class="error"></div>
+
+            <button type="submit">Proceed</button>
+        </form>
+    </div>
+    <script>
+        function validateForm() {
+            // Get form inputs
+            const fullName = document.getElementById('fullName').value.trim();
+            const dob = document.getElementById('dob').value.trim();
+            const gender = document.getElementById('gender').value.trim();
+            const maritalStatus = document.getElementById('maritalStatus').value.trim();
+            const email = document.getElementById('email').value.trim();
+            
+            // Validation checks
+            if (fullName === '' || dob === '' || gender === '' || maritalStatus === '' || email === '') {
+                alert('Please fill in all fields.');
+                return false;
+            }
+
+            if (!validateDOB(dob)) {
+                alert('You must be at least 18 years old.');
+                return false;
+            }
+
+            return true; // Form is valid
+        }
+
+        function validateDOB(dob) {
+            const dobDate = new Date(dob);
+            const today = new Date();
+            const age = today.getFullYear() - dobDate.getFullYear();
+            const monthDifference = today.getMonth() - dobDate.getMonth();
+            const dayDifference = today.getDate() - dobDate.getDate();
+
+            // Adjust age if the birthday hasn't occurred yet this year
+            if (monthDifference < 0 || (monthDifference === 0 && dayDifference < 0)) {
+                age--;
+            }
+
+            return age >= 18;
+        }
+
+        document.getElementById('personal-info-form').onsubmit = function(event) {
+            if (!validateForm()) {
+                event.preventDefault();
+            }
+        };
+    </script>
+</body>
+</html>

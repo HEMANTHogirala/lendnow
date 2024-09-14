@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMI Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 30px;
+        }
+        h1 {
+            text-align: center;
+            color: #014793;
+        }
+        .form-container {
+            margin-bottom: 20px;
+        }
+        .form-container input, .form-container select, .form-container button {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        .form-container button {
+            background-color: #014793;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 50%;
+            margin: 10px auto;
+            display: block;
+            font-size: 14px;
+            padding: 8px;
+        }
+        .form-container button:hover {
+            background-color: #014793;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #c6a201e0;
+        }
+        .result p {
+            margin: 5px 0;
+        }
+        .apply-button {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            background-color: #000000;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .apply-button:hover {
+            background-color: #000000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>EMI Calculator</h1>
+        <div class="form-container">
+            <form id="emiForm">
+                <input type="number" id="loanAmount" placeholder="Loan Amount (₹)" required>
+                <input type="number" id="interestRate" placeholder="Annual Interest Rate (%)" min="6" required>
+                <select id="tenureType" required>
+                    <option value="years">Years</option>
+                    <option value="months">Months</option>
+                </select>
+                <input type="number" id="loanTenure" placeholder="Loan Tenure" required>
+                <button type="submit">Calculate EMI</button>
+            </form>
+        </div>
+        <div class="result" id="emiResult"></div>
+        <a href="scrn1.html" class="apply-button" id="applyButton">Apply Now</a>
+    </div>
+
+    <script>
+        document.getElementById('emiForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const loanAmount = parseFloat(document.getElementById('loanAmount').value);
+            const interestRate = parseFloat(document.getElementById('interestRate').value) / 12 / 100;
+            const tenureType = document.getElementById('tenureType').value;
+            let loanTenure = parseFloat(document.getElementById('loanTenure').value);
+            
+            if (tenureType === 'years') {
+                loanTenure *= 12; // Convert years to months
+            }
+
+            const emi = (loanAmount * interestRate * Math.pow(1 + interestRate, loanTenure)) / (Math.pow(1 + interestRate, loanTenure) - 1);
+            const totalAmount = emi * loanTenure;
+            
+            const emiResult = document.getElementById('emiResult');
+            emiResult.innerHTML = `
+                <p>Loan Amount: ₹${loanAmount}</p>
+                <p>Interest Rate: ${interestRate * 12 * 100}%</p>
+                <p>Loan Tenure: ${loanTenure} months</p>
+                <p>Total Amount to be Paid (with interest): ₹${totalAmount.toFixed(2)}</p>
+            `;
+            
+            const applyButton = document.getElementById('applyButton');
+            applyButton.style.display = 'block'; // Show the "Apply Now" button
+        });
+    </script>
+</body>
+</html>

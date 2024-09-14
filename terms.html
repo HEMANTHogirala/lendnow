@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms and Conditions</title>
+    <style>
+        /* Common styles for input fields and labels */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #2980b9;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Terms and Conditions</h2>
+        <p>Please read the following terms and conditions carefully before proceeding:</p>
+        <ul>
+            <li>By using this service, you agree to comply with and be bound by the following terms and conditions of use.</li>
+            <li>Your use of any information or materials on this website is entirely at your own risk, for which we shall not be liable.</li>
+            <li>It shall be your own responsibility to ensure that any products, services, or information available through this website meet your specific requirements.</li>
+            <li>This website contains material which is owned by or licensed to us. This material includes, but is not limited to, the design, layout, look, appearance, and graphics.</li>
+            <li>Unauthorized use of this website may give rise to a claim for damages and/or be a criminal offense.</li>
+            <li>Your use of this website and any dispute arising out of such use of the website is subject to the laws of India.</li>
+        </ul>
+        <label for="agreement-checkbox">
+            <input type="checkbox" id="agreement-checkbox" required> I agree to the terms and conditions
+        </label>
+        <p></p>
+        <div style="text-align: center;">
+            <button type="button" onclick="submitForm()">Submit</button>
+        </div>
+        
+    </div>
+    <script>
+        function submitForm() {
+            if (document.getElementById('agreement-checkbox').checked) {
+                // Perform any additional actions if necessary
+                alert('Form submitted successfully!');
+                // Redirect to confirmation screen or perform any other action
+                document.location.href = 'final.html';
+            } else {
+                alert('Please agree to the terms and conditions.');
+            }
+        }
+    </script>
+</body>
+</html>

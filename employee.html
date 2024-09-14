@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employment and Income Details</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Employment and Income Details</h2>
+        <form id="employment-info-form" action="/apply3" method="POST">
+            <label for="employment-type">Employment Type:</label>
+            <select id="employmenttype" name="employmenttype" required>
+                <option value="salaried">Salaried</option>
+                <option value="self-employed">Self-Employed</option>
+                <option value="other">Other</option>
+            </select>
+            
+            <label for="employer-name">Employer Name:</label>
+            <input type="text" id="employername" name="employername" required>
+            
+            <label for="designation">Designation/Job Title:</label>
+            <input type="text" id="designation" name="designation" required>
+            
+            <label for="work-address">Work Address:</label>
+            <input type="text" id="workaddress" name="workaddress" required>
+            
+            <label for="monthly-income">Monthly Income:</label>
+            <input type="number" id="monthlyincome" name="monthlyincome" required>
+            
+            <button type="submit">Proceed</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('employment-info-form').addEventListener('submit', function(event) {
+            const employmentType = document.getElementById('employmenttype').value;
+            const employerName = document.getElementById('employername').value;
+            const designation = document.getElementById('designation').value;
+            const workAddress = document.getElementById('workaddress').value;
+            const monthlyIncome = document.getElementById('monthlyincome').value;
+
+            // Validate inputs
+            if (!validateEmployerName(employerName)) {
+                alert('Employer name must contain only alphabets and spaces.');
+                event.preventDefault();
+                return;
+            }
+
+            if (!validateDesignation(designation)) {
+                alert('Designation/Job title must contain only alphabets, dots, or spaces.');
+                event.preventDefault();
+                return;
+            }
+
+            if (!validateWorkAddress(workAddress)) {
+                alert('Work address must contain only hyphens, numbers, commas, or alphabets.');
+                event.preventDefault();
+                return;
+            }
+
+            if (!validateMonthlyIncome(monthlyIncome)) {
+                alert('Monthly income must be a number greater than 10,000.');
+                event.preventDefault();
+                return;
+            }
+        });
+
+        function validateEmployerName(name) {
+            return /^[a-zA-Z ]+$/.test(name);
+        }
+
+        function validateDesignation(title) {
+            return /^[a-zA-Z. ]+$/.test(title);
+        }
+
+        function validateWorkAddress(address) {
+            return /^[a-zA-Z0-9,-\s]+$/.test(address);
+        }
+
+        function validateMonthlyIncome(income) {
+            return income > 10000;
+        }
+    </script>
+</body>
+</html>

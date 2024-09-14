@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instant Loan Application</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <img src="https://img.icons8.com/?size=100&id=34013&format=png&color=000000" alt="App Logo" class="logo">
+        <h1>Welcome to Instant Loan Application</h1>
+        <form id="email-form" action="#" method="POST" onsubmit="return verifyOTP(event)">
+            <label for="email">Email ID:</label>
+            <input type="email" id="email" name="email" required>
+            
+            <button type="button" onclick="generateOTP()">Generate OTP</button>
+
+            <div class="otp-section" style="display: none;" id="otp-section">
+                <label for="otp">Enter OTP:</label>
+                <input type="text" id="otp" name="otp" maxlength="6" pattern="\d{6}" required>
+                <button type="submit">Verify OTP</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        async function generateOTP() {
+            console.log('Generating OTP...');
+            const email = document.getElementById('email').value;
+            console.log('Email:', email);
+            const response = await fetch('http://localhost:3019/send-otp', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                document.getElementById('otp-section').style.display = 'block';
+                alert(data.message);
+            } else {
+                alert(data.message);
+            }
+        }
+
+        async function verifyOTP(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const otp = document.getElementById('otp').value;
+            const response = await fetch('http://localhost:3019/verify-otp', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, otp })
+            });
+            const data = await response.json();
+            if (response.ok) {
+            alert(data.message);
+            // Redirect to scrn2.html after OTP verification
+            window.location.href = 'scrn2.html';
+        } else {
+            alert(data.message);
+        }
+    
+        }
+    </script>
+</body>
+</html>

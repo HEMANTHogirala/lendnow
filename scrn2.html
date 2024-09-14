@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Information</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to the CSS file -->
+    <style>
+        .phone-input {
+            display: flex;
+            align-items: center;
+        }
+        .country-code {
+            margin-right: 5px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Personal Information</h2>
+        <form id="personal-info-form" action="/apply2" method="POST">
+            <label for="full-name">Full Name:</label>
+            <input type="text" id="fullName" name="fullName" required>
+            <div id="full-name-error" class="error"></div>
+
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required>
+            <div id="dob-error" class="error"></div>
+
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="">Select</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+            <div id="gender-error" class="error"></div>
+
+            <label for="marital-status">Marital Status:</label>
+            <select id="maritalStatus" name="maritalStatus" required>
+                <option value="">Select</option>
+                <option value="single">Single</option>
+                <option value="married">Married</option>
+                <option value="other">Other</option>
+            </select>
+            <div id="marital-status-error" class="error"></div>
+
+            <label for="mobilenumber">Mobile Number:</label>
+            <div class="phone-input">
+                <span class="country-code">+91</span>
+                <input type="text" id="mobilenumber" name="mobilenumber" maxlength="10" pattern="\d{10}" required>
+            </div>
+            <div id="mobilenumber-error" class="error"></div>
+
+            <button type="submit" onclick="goToPage()">Proceed</button>
+        </form>
+    </div>
+    <script>
+        function validateForm() {
+            // Get form inputs
+            const fullName = document.getElementById('fullName').value.trim();
+            const dob = document.getElementById('dob').value.trim();
+            const gender = document.getElementById('gender').value.trim();
+            const maritalStatus = document.getElementById('maritalStatus').value.trim();
+            const mobilenumber = document.getElementById('mobilenumber').value.trim();
+            
+            // Validation checks
+            if (fullName === '' || dob === '' || gender === '' || maritalStatus === '' || mobilenumber === '') {
+                alert('Please fill in all fields.');
+                return false;
+            }
+
+            if (!validateDOB(dob)) {
+                alert('You must be at least 18 years old.');
+                return false;
+            }
+
+            if (!validateMobileNumber(mobilenumber)) {
+                alert('Please enter a valid 10-digit Indian mobile number.');
+                return false;
+            }
+
+            return true; // Form is valid
+        }
+
+        function validateDOB(dob) {
+            const dobDate = new Date(dob);
+            const today = new Date();
+            let age = today.getFullYear() - dobDate.getFullYear();
+            const monthDifference = today.getMonth() - dobDate.getMonth();
+            const dayDifference = today.getDate() - dobDate.getDate();
+
+            // Adjust age if the birthday hasn't occurred yet this year
+            if (monthDifference < 0 || (monthDifference === 0 && dayDifference < 0)) {
+                age--;
+            }
+
+            return age >= 18;
+        }
+
+        function validateMobileNumber(mobilenumber) {
+            const regex = /^\d{10}$/;
+            return regex.test(mobilenumber);
+        }
+
+        function goToPage() {
+            if (validateForm()) {
+                window.location.href = 'employee.html';
+            }
+        }
+    </script>
+</body>
+</html>
